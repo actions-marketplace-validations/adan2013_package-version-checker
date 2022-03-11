@@ -1,0 +1,37 @@
+name: 'PR package version checker'
+description: 'Check if package.json version is updated in the current PR'
+author: 'Daniel Alberski'
+
+branding:
+  icon: 'box'
+  color: 'red'
+
+inputs:
+  GITHUB_TOKEN:
+    description: 'Access token to the repository (get this from secrets.GITHUB_TOKEN)'
+    required: true
+  PR_BASE_SHA:
+    description: 'The SHA of the PR base commit'
+    required: true
+  PACKAGE_JSON_PATH:
+    description: 'The path to the package.json'
+    required: false
+    default: 'package.json'
+  AUTO_FAILURE_MODE:
+    description: 'Decide when script should block the workflow. Default is off. other options: isDifferent oraz isTheSame'
+    required: false
+    default: 'off'
+
+outputs:
+  isChanged:
+    description: 'Boolean flag - true if package.json has been changed'
+  versionFromPR:
+    description: 'Package version from the PR'
+  versionFromBase:
+    description: 'Package version from the base commit of our PR'
+  packageName:
+    description: 'Name of the package'
+
+runs:
+  using: 'node12'
+  main: 'index.js'
