@@ -2,7 +2,7 @@ const core = require('@actions/core')
 const { getOctokit, context } = require('@actions/github')
 
 const getPackageJson = async (ref, octokit, packageJsonPath) => {
-  const packageJSONData = (await octokit.repos.getContents({
+  const packageJSONData = (await octokit.rest.repos.getContent({
     ...context.repo,
     path: packageJsonPath,
     ref,
