@@ -1,5 +1,5 @@
 const core = require('@actions/core')
-const { GitHub, context } = require('@actions/github')
+const { getOctokit, context } = require('@actions/github')
 
 const getPackageJson = async (ref, octokit, packageJsonPath) => {
   const packageJSONData = (await octokit.repos.getContents({
@@ -21,7 +21,7 @@ const compare = async () => {
     const baseSHA = core.getInput('PR_BASE_SHA', { required: true })
     const currentSHA = context.sha
 
-    const octokit = new GitHub(token)
+    const octokit = new getOctokit(token)
     const currentPackageJson = await getPackageJson(currentSHA, octokit, packageJsonPath)
     const basePackageJson = await getPackageJson(baseSHA, octokit, packageJsonPath)
 
